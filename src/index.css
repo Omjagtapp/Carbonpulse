@@ -55,15 +55,44 @@ body {
 }
 
 #root {
-  width: 1126px;
+  width: 100%;
   max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  margin: 0;
+  text-align: left;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background: #0a0f0d;
+}
+
+/* Range slider thumb styling for ScenarioTool sliders */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #34d399;
+  cursor: pointer;
+  border: 2px solid #0a0f0d;
+  box-shadow: 0 0 6px rgba(52,211,153,0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #34d399;
+  cursor: pointer;
+  border: 2px solid #0a0f0d;
+  box-shadow: 0 0 6px rgba(52,211,153,0.5);
+}
+
+/* Select element dark styling */
+select option {
+  background: #111916;
+  color: #e8f0ec;
 }
 
 h1,
