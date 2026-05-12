@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CarbonPulse — Final Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --g:#16a34a; --gd:#15803d; --gl:#dcfce7; --gm:#bbf7d0; --gx:rgba(22,163,74,.1);
+  --ink:#111827; --ink2:#1f2937; --gray:#374151; --muted:#6b7280; --dim:#9ca3af;
+  --line:#e5e7eb; --bg:#f9fafb; --wh:#ffffff;
+  --amb:#d97706; --ambl:#fef3c7;
+  --red:#dc2626; --redl:#fee2e2;
+  --blue:#2563eb; --bluel:#dbeafe;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --head:'Outfit',sans-serif;
+}
+
+html,body{width:100%;height:100%;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;overflow:hidden;-webkit-font-smoothing:antialiased}
+
+/* DECK */
+.deck{width:100vw;height:100vh;position:relative}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;animation:rise .4s cubic-bezier(.16,1,.3,1)}
+.slide.on{display:flex}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* NAV */
+.nav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:4px;
+  background:var(--wh);border:1.5px solid var(--line);border-radius:40px;padding:8px 18px;
+  box-shadow:0 8px 32px rgba(0,0,0,.1);z-index:9999}
+.nav button{background:none;border:none;color:var(--muted);font-family:var(--font);
+  font-size:12px;font-weight:600;cursor:pointer;padding:6px 12px;border-radius:20px;transition:all .15s}
+.nav button:hover{background:var(--gl);color:var(--gd)}
+.nav .arr{font-size:18px;color:var(--g);padding:4px 8px}
+.nav .ctr{font-size:11px;color:var(--dim);min-width:40px;text-align:center;font-weight:600}
+
+/* DOTS */
+.dots{position:fixed;top:18px;right:24px;display:flex;gap:6px;z-index:9999}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .2s}
+.dot.on{background:var(--g);width:20px;border-radius:4px}
+
+/* LOGO */
+.logo{display:flex;align-items:center;gap:10px}
+.logo-box{width:36px;height:36px;border-radius:10px;background:var(--g);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head);font-weight:900;font-size:18px;color:#fff;flex-shrink:0}
+.logo-name{font-family:var(--head);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--ink)}
+.logo-beta{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--gl);color:var(--gd);padding:3px 8px;border-radius:20px}
+
+/* TOPBAR */
+.bar{display:flex;align-items:center;justify-content:space-between;padding:20px 60px 0;flex-shrink:0}
+.snum{font-size:12px;color:var(--dim);font-weight:600;letter-spacing:.05em}
+
+/* BODY */
+.body{padding:16px 60px 72px;flex:1;display:flex;flex-direction:column}
+
+/* TYPE */
+.lbl{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--g);margin-bottom:10px}
+h1{font-family:var(--head);font-size:clamp(48px,6.5vw,80px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:var(--ink)}
+h2{font-family:var(--head);font-size:clamp(34px,4.5vw,52px);font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--ink)}
+h3{font-family:var(--font);font-size:18px;font-weight:700;color:var(--ink);line-height:1.2}
+h4{font-family:var(--font);font-size:15px;font-weight:700;color:var(--ink)}
+p{color:var(--muted);line-height:1.65;font-size:15px}
+.g{color:var(--g)}
+.a{color:var(--amb)}
+.r{color:var(--red)}
+
+/* CARDS */
+.card{background:var(--wh);border:1.5px solid var(--line);border-radius:18px;padding:24px 26px;box-shadow:0 2px 16px rgba(0,0,0,.05)}
+.card-g{background:var(--gl);border:1.5px solid var(--gm);border-radius:18px;padding:24px 26px}
+.card-ink{background:var(--ink);border-radius:18px;padding:24px 28px;color:#fff}
+.card-sm{background:var(--wh);border:1.5px solid var(--line);border-radius:13px;padding:16px 18px;box-shadow:0 1px 8px rgba(0,0,0,.04)}
+
+/* TAGS */
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:20px}
+.tg{background:var(--gl);color:var(--gd)}
+.ta{background:var(--ambl);color:#92400e}
+.tr{background:var(--redl);color:#991b1b}
+.tb{background:var(--bluel);color:#1d4ed8}
+.tk{background:var(--ink);color:#fff}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px}
+
+/* HELPERS */
+.hr{height:1px;background:var(--line);margin:14px 0}
+.big{font-family:var(--head);font-size:48px;font-weight:900;color:var(--g);line-height:1}
+.row{display:flex;gap:12px;align-items:flex-start}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px;font-size:15px}
+.ci{color:var(--g);font-weight:800;flex-shrink:0;margin-top:1px;font-size:16px}
+.cx{color:var(--dim);font-weight:700;flex-shrink:0;margin-top:1px}
+.pbar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.pfill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--g),var(--gd))}
+.foot{margin-top:auto;padding-top:12px;border-top:1.5px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;color:var(--dim);font-weight:500}
+
+/* ICON BOX */
+.ibox{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;font-size:26px;flex-shrink:0;margin-bottom:14px}
+.ig{background:var(--gl)}
+.ia{background:var(--ambl)}
+.ir{background:var(--redl)}
+.ib{background:var(--bluel)}
+
+/* STEP DOT */
+.sdot{width:42px;height:42px;border-radius:50%;background:var(--gl);border:2.5px solid var(--gm);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head);font-weight:900;font-size:16px;color:var(--gd);flex-shrink:0}
+
+/* TL */
+.tli{display:flex;gap:16px}
+.tls{display:flex;flex-direction:column;align-items:center}
+.tld{width:13px;height:13px;border-radius:50%;background:var(--g);flex-shrink:0;margin-top:4px}
+.tll{width:2px;background:var(--gm);flex:1;margin:4px 0}
+.tlb{padding-bottom:18px;flex:1}
+
+/* STAT STRIP */
+.stat{text-align:center}
+.stat .n{font-family:var(--head);font-size:42px;font-weight:900;color:var(--g);line-height:1}
+.stat .u{font-size:13px;color:var(--dim);margin-top:4px;font-weight:500}
+
+/* HERO BG circles */
+.hc1{position:absolute;top:-140px;right:-140px;width:550px;height:550px;border-radius:50%;
+  background:radial-gradient(circle,rgba(22,163,74,.1) 0%,transparent 70%);pointer-events:none}
+.hc2{position:absolute;bottom:-100px;left:-60px;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(22,163,74,.07) 0%,transparent 70%);pointer-events:none}
+
+/* SLIDE 1 FULL BLEED SIDE */
+.s1wrap{display:flex;flex:1;overflow:hidden}
+.s1left{width:42%;background:var(--ink);display:flex;flex-direction:column;
+  justify-content:center;padding:48px 48px;position:relative;overflow:hidden}
+.s1right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px 52px 80px}
+.s1glow{position:absolute;top:-100px;left:-100px;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(22,163,74,.2) 0%,transparent 65%);pointer-events:none}
+
+/* INLINE SVG DIAGRAMS */
+.diagram svg text{font-family:var(--font)}
+
+/* EXPORT TOOLBAR */
+.toolbar{position:fixed;top:16px;left:20px;display:flex;gap:8px;z-index:9999}
+.tbtn{display:flex;align-items:center;gap:6px;background:var(--wh);border:1.5px solid var(--line);
+  border-radius:30px;padding:7px 14px;font-family:var(--font);font-size:12px;font-weight:700;
+  color:var(--gray);cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.08);transition:all .15s}
+.tbtn:hover{border-color:var(--g);color:var(--g);background:var(--gl)}
+.tbtn svg{flex-shrink:0}
+
+/* PRINT — one slide per page */
+@media print{
+  .nav,.dots,.toolbar{display:none!important}
+  html,body{overflow:visible;height:auto;background:#fff}
+  .deck{position:relative;height:auto}
+  .slide{display:flex!important;position:relative!important;inset:auto!important;
+    width:100vw;height:100vh;page-break-after:always;break-after:page;animation:none!important}
+  @page{size:landscape;margin:0}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ════════════════════════════════════════════
+  SLIDE 1 · TITLE
+════════════════════════════════════════════ -->
+<div class="slide on" data-s="1" style="background:var(--wh);">
+  <div class="s1wrap">
+
+    <!-- LEFT DARK PANEL -->
+    <div class="s1left">
+      <div class="s1glow"></div>
+      <div style="position:relative;z-index:1;">
+        <!-- Big C monogram -->
+        <div style="font-family:var(--head);font-size:160px;font-weight:900;color:rgba(22,163,74,.15);line-height:1;margin-bottom:-20px;user-select:none;">C</div>
+        <div class="logo" style="margin-bottom:32px;">
+          <div class="logo-box">C</div>
+          <span class="logo-name" style="color:#fff;">CarbonPulse</span>
+          <span class="logo-beta">BETA</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,.4);font-weight:500;text-transform:uppercase;letter-spacing:.15em;margin-bottom:14px;">Group 4 · Final Project</div>
+        <div style="font-size:17px;color:rgba(255,255,255,.75);font-weight:500;line-height:1.6;margin-bottom:32px;">
+          Anish · Khuzaima<br/>Om · Ujjval
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/><path d="M5 8l2.5 2.5L11 6" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:13px;color:rgba(255,255,255,.5);">React + Vite · Recharts · jsPDF</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/><path d="M5 8l2.5 2.5L11 6" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:13px;color:rgba(255,255,255,.5);">GHG Protocol · EPA eGRID 2024</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/><path d="M5 8l2.5 2.5L11 6" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:13px;color:rgba(255,255,255,.5);">github.com/Omjagtapp/Carbonpulse</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT LIGHT PANEL -->
+    <div class="s1right" style="position:relative;overflow:hidden;">
+      <div class="hc1"></div>
+      <div class="hc2"></div>
+      <div style="position:relative;z-index:1;">
+        <div style="width:56px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--g),var(--gd));margin-bottom:24px;"></div>
+        <div class="lbl">Emissions Analytics Dashboard</div>
+        <h1 style="margin-bottom:24px;">
+          Making<br/>Carbon<br/><span class="g">Reporting</span><br/>Simple.
+        </h1>
+        <p style="font-size:17px;max-width:480px;margin-bottom:36px;color:var(--gray);">
+          <strong style="color:var(--ink);">CarbonPulse</strong> turns raw monthly energy bills into
+          audit-ready Scope 1 &amp; 2 carbon reports — instantly, in the browser, no consultants needed.
+        </p>
+        <!-- Mini stat strip -->
+        <div style="display:flex;gap:32px;">
+          <div><div style="font-family:var(--head);font-size:36px;font-weight:900;color:var(--g);line-height:1;">3</div><div style="font-size:13px;color:var(--dim);margin-top:4px;">Scopes tracked</div></div>
+          <div style="width:1px;background:var(--line);"></div>
+          <div><div style="font-family:var(--head);font-size:36px;font-weight:900;color:var(--g);line-height:1;">10</div><div style="font-size:13px;color:var(--dim);margin-top:4px;">Features built</div></div>
+          <div style="width:1px;background:var(--line);"></div>
+          <div><div style="font-family:var(--head);font-size:36px;font-weight:900;color:var(--g);line-height:1;">0</div><div style="font-size:13px;color:var(--dim);margin-top:4px;">Servers needed</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 2 · WHAT IS CARBONPULSE
+════════════════════════════════════════════ -->
+<div class="slide" data-s="2" style="background:var(--bg);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">02 / 10</div></div>
+  <div class="body">
+    <div class="lbl">Overview</div>
+    <h2 style="margin-bottom:8px;">What is <span class="g">CarbonPulse?</span></h2>
+    <p style="font-size:16px;max-width:700px;margin-bottom:28px;">A browser-based emissions analytics platform that converts raw energy consumption into structured, audit-ready Scope 1 &amp; 2 carbon reports — no technical expertise required.</p>
+
+    <div class="g3" style="flex:1;margin-bottom:20px;">
+      <!-- TRACK -->
+      <div class="card" style="border-top:4px solid var(--g);">
+        <div class="ibox ig">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 20L10 13l5 5 5-7 4 4" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="20" r="2" fill="#16a34a"/><circle cx="10" cy="13" r="2" fill="#16a34a"/><circle cx="15" cy="18" r="2" fill="#16a34a"/><circle cx="20" cy="11" r="2" fill="#16a34a"/><circle cx="24" cy="15" r="2" fill="#16a34a"/></svg>
+        </div>
+        <h3 style="margin-bottom:10px;">Track</h3>
+        <p style="font-size:14px;">Enter electricity, gas, and diesel usage manually or upload a CSV. <strong style="color:var(--ink);">CarbonPulse</strong> validates every row and flags errors before calculating anything.</p>
+        <div class="hr"></div>
+        <div style="font-size:12px;color:var(--dim);font-weight:600;">CSV upload · Manual input · Row validation</div>
+      </div>
+      <!-- CALCULATE -->
+      <div class="card" style="border-top:4px solid var(--amb);">
+        <div class="ibox ia">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="5" y="5" width="18" height="18" rx="3" stroke="#d97706" stroke-width="2.2"/><path d="M9 14h10M14 9v10" stroke="#d97706" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 style="margin-bottom:10px;">Calculate</h3>
+        <p style="font-size:14px;">EPA-standard emission factors instantly convert usage to kg CO₂e. Every calculation is shown in a 10-column audit trail with factor source, date, and methodology.</p>
+        <div class="hr"></div>
+        <div style="font-size:12px;color:var(--dim);font-weight:600;">EPA eGRID 2024 · GHG Protocol · Scope 1 &amp; 2</div>
+      </div>
+      <!-- ACT -->
+      <div class="card" style="border-top:4px solid var(--red);">
+        <div class="ibox ir">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 5v9l5 5" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="14" r="9" stroke="#dc2626" stroke-width="2.2"/></svg>
+        </div>
+        <h3 style="margin-bottom:10px;">Act</h3>
+        <p style="font-size:14px;">5 dynamic insights explain why emissions are high. The Scenario Planner models the impact of any change before you commit. One-click PDF &amp; CSV export for regulators.</p>
+        <div class="hr"></div>
+        <div style="font-size:12px;color:var(--dim);font-weight:600;">Insights · Scenario planner · PDF/CSV/GHG export</div>
+      </div>
+    </div>
+
+    <div class="card-ink" style="display:flex;align-items:center;gap:40px;">
+      <div style="flex:1;">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.35);margin-bottom:8px;">The Three Questions CarbonPulse Answers</div>
+        <div style="font-family:var(--head);font-size:22px;font-weight:800;line-height:1.3;color:#fff;">
+          "What are my emissions? <span style="color:var(--g);">Why are they high?</span><br/>And what can I do about it?"
+        </div>
+      </div>
+      <div style="display:flex;gap:32px;flex-shrink:0;">
+        <div class="stat"><div class="n">3</div><div class="u">Export formats</div></div>
+        <div class="stat"><div class="n">10</div><div class="u">Features live</div></div>
+        <div class="stat"><div class="n">0</div><div class="u">Servers needed</div></div>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>Audit-ready Scope 1 &amp; 2 reporting · March 2026</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 3 · THE PROBLEM
+════════════════════════════════════════════ -->
+<div class="slide" data-s="3" style="background:var(--wh);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">03 / 10</div></div>
+  <div class="body">
+    <div class="lbl">Problem Space</div>
+    <h2 style="margin-bottom:8px;">Why Does <span class="g">This Matter?</span></h2>
+    <p style="font-size:16px;max-width:680px;margin-bottom:28px;">SME manufacturers face growing regulatory pressure to report emissions — but existing tools are too complex, too expensive, or built only for large enterprises.</p>
+
+    <div class="g3" style="margin-bottom:18px;">
+      <div class="card" style="border-left:5px solid var(--red);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <span class="tag tr">Problem 01</span>
+          <span style="font-family:var(--head);font-size:48px;font-weight:900;color:var(--red);line-height:1;">78%</span>
+        </div>
+        <h3 style="margin-bottom:8px;">No Emissions Baseline</h3>
+        <p style="font-size:14px;">of SMEs have never calculated their Scope 1 or Scope 2 emissions. They don't know where to start — or what a tCO₂e even means.</p>
+        <div class="pbar" style="margin-top:16px;"><div class="pfill" style="width:78%;background:linear-gradient(90deg,var(--red),#f97316);"></div></div>
+        <div style="font-size:12px;color:var(--dim);margin-top:6px;">Source: DEFRA SME Survey 2024</div>
+      </div>
+      <div class="card" style="border-left:5px solid var(--amb);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <span class="tag ta">Problem 02</span>
+          <span style="font-family:var(--head);font-size:48px;font-weight:900;color:var(--amb);line-height:1;">$12k</span>
+        </div>
+        <h3 style="margin-bottom:8px;">Tools Are Too Expensive</h3>
+        <p style="font-size:14px;">Enterprise platforms like SimaPro cost $12,000+ per year and require specialist consultants. SMEs simply can't afford this.</p>
+        <div class="pbar" style="margin-top:16px;"><div class="pfill" style="width:65%;background:linear-gradient(90deg,var(--amb),#fbbf24);"></div></div>
+        <div style="font-size:12px;color:var(--dim);margin-top:6px;">65% cite cost as the #1 barrier</div>
+      </div>
+      <div class="card" style="border-left:5px solid var(--g);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <span class="tag tg">Problem 03</span>
+          <span style="font-family:var(--head);font-size:48px;font-weight:900;color:var(--g);line-height:1;">82%</span>
+        </div>
+        <h3 style="margin-bottom:8px;">No Reduction Roadmap</h3>
+        <p style="font-size:14px;">Even when companies know their numbers, they have no way to model what would happen if they changed a process or switched to renewables.</p>
+        <div class="pbar" style="margin-top:16px;"><div class="pfill" style="width:82%;"></div></div>
+        <div style="font-size:12px;color:var(--dim);margin-top:6px;">82% have no reduction roadmap</div>
+      </div>
+    </div>
+
+    <div class="card-ink" style="display:flex;align-items:center;gap:20px;">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="flex-shrink:0;">
+        <circle cx="24" cy="24" r="22" fill="rgba(22,163,74,.15)"/>
+        <path d="M24 16v9" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="24" cy="31" r="2.5" fill="#16a34a"/>
+      </svg>
+      <div>
+        <div style="font-weight:700;font-size:16px;color:#fff;margin-bottom:4px;">The Regulatory Reality</div>
+        <p style="color:rgba(255,255,255,.55);font-size:14px;">SEC and EU CSRD mandates are pushing emissions reporting requirements down supply chains. SME automotive suppliers serving Ford, GM, and Stellantis will need to report Scope 3 data by 2026. <strong style="color:var(--g);">CarbonPulse</strong> is built for exactly this moment.</p>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>Sources: DEFRA 2024 · EPA Supply Chain Survey</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 4 · THE SOLUTION
+════════════════════════════════════════════ -->
+<div class="slide" data-s="4" style="background:var(--bg);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">04 / 10</div></div>
+  <div class="body">
+    <div class="lbl">The Solution</div>
+    <h2 style="margin-bottom:8px;"><span class="g">CarbonPulse</span> Bridges the Gap</h2>
+    <p style="font-size:16px;max-width:680px;margin-bottom:28px;">An end-to-end reporting workflow — from data entry to regulatory export — that requires no technical expertise and runs entirely in the browser.</p>
+
+    <!-- PIPELINE DIAGRAM -->
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:24px;background:var(--wh);border:1.5px solid var(--line);border-radius:18px;padding:22px 28px;box-shadow:0 2px 16px rgba(0,0,0,.05);">
+      <div style="text-align:center;flex:1;">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--gl);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="4" width="18" height="18" rx="3" stroke="#16a34a" stroke-width="2"/><path d="M8 13h10M13 8v10" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);">Upload / Enter</div>
+        <div style="font-size:12px;color:var(--dim);">CSV or manual</div>
+      </div>
+      <div style="color:var(--gm);font-size:28px;font-weight:300;padding:0 4px;">→</div>
+      <div style="text-align:center;flex:1;">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--gl);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="9" stroke="#16a34a" stroke-width="2"/><path d="M9 13l3 3 5-5" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);">Validate</div>
+        <div style="font-size:12px;color:var(--dim);">Auto-check units</div>
+      </div>
+      <div style="color:var(--gm);font-size:28px;font-weight:300;padding:0 4px;">→</div>
+      <div style="text-align:center;flex:1;">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--ambl);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 4v5M13 17v5M4 13h5M17 13h5" stroke="#d97706" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="13" r="4" stroke="#d97706" stroke-width="2"/></svg>
+        </div>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);">Calculate CO₂e</div>
+        <div style="font-size:12px;color:var(--dim);">EPA factors</div>
+      </div>
+      <div style="color:var(--gm);font-size:28px;font-weight:300;padding:0 4px;">→</div>
+      <div style="text-align:center;flex:1;">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--bluel);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M5 18L10 11l4 4 4-6 3 3" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);">Visualize</div>
+        <div style="font-size:12px;color:var(--dim);">Live charts</div>
+      </div>
+      <div style="color:var(--gm);font-size:28px;font-weight:300;padding:0 4px;">→</div>
+      <div style="text-align:center;flex:1;">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--gl);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="6" y="4" width="14" height="18" rx="2.5" stroke="#16a34a" stroke-width="2"/><path d="M10 9h6M10 13h6M10 17h4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);">Export</div>
+        <div style="font-size:12px;color:var(--dim);">PDF · CSV · GHG</div>
+      </div>
+    </div>
+
+    <div class="g2" style="flex:1;gap:18px;">
+      <div class="card-g">
+        <h3 style="margin-bottom:16px;color:var(--gd);">What makes CarbonPulse different</h3>
+        <div class="chk"><span class="ci">✓</span><span><strong>No consultants needed.</strong> Operations managers use it without any training.</span></div>
+        <div class="chk"><span class="ci">✓</span><span><strong>No page reload.</strong> Every chart updates the moment you change a number.</span></div>
+        <div class="chk"><span class="ci">✓</span><span><strong>Audit trail built-in.</strong> Factor source, date, and methodology shown for every row.</span></div>
+        <div class="chk"><span class="ci">✓</span><span><strong>Plan before you act.</strong> Scenario Planner models the impact of changes before you commit.</span></div>
+        <div class="chk"><span class="ci">✓</span><span><strong>One-click export.</strong> PDF, CSV, GHG Protocol — all generated in under 1 second.</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <h4 style="color:var(--dim);text-transform:uppercase;letter-spacing:.1em;font-size:11px;">Who uses CarbonPulse</h4>
+        <div class="card-sm" style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏭</div>
+          <div><h4 style="margin-bottom:4px;">Operations Managers</h4><p style="font-size:13px;">Enter monthly energy bills, see instant emissions totals across Scope 1 &amp; 2</p></div>
+        </div>
+        <div class="card-sm" style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:var(--ambl);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📋</div>
+          <div><h4 style="margin-bottom:4px;">Compliance Teams</h4><p style="font-size:13px;">Download professionally formatted PDF reports ready for regulators</p></div>
+        </div>
+        <div class="card-sm" style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:var(--bluel);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📈</div>
+          <div><h4 style="margin-bottom:4px;">Sustainability Leads</h4><p style="font-size:13px;">Use the Scenario Planner to model reductions and plan offset purchases</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>Fully client-side · No backend required</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 5 · KEY FEATURES
+════════════════════════════════════════════ -->
+<div class="slide" data-s="5" style="background:var(--wh);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">05 / 10</div></div>
+  <div class="body">
+    <div class="lbl">Feature Set</div>
+    <h2 style="margin-bottom:20px;">Everything <span class="g">Built &amp; Shipped</span></h2>
+
+    <div class="g4" style="flex:1;">
+      <div class="card" style="border-top:4px solid var(--g);">
+        <div style="font-size:32px;margin-bottom:12px;">🔍</div>
+        <h4 style="margin-bottom:7px;">Live Filter Bar</h4>
+        <p style="font-size:13px;">Month, year, facility (3 plants), scenario selectors — multipliers update all charts instantly with no page reload.</p>
+        <div class="hr"></div>
+        <span class="tag tg">Baseline · Optimized · High Prod.</span>
+      </div>
+      <div class="card" style="border-top:4px solid var(--amb);">
+        <div style="font-size:32px;margin-bottom:12px;">📁</div>
+        <h4 style="margin-bottom:7px;">CSV Upload + Validate</h4>
+        <p style="font-size:13px;">Drag-and-drop CSV parsing with row preview, validation badges, and auto-populate of input fields.</p>
+        <div class="hr"></div>
+        <span class="tag ta">✓ Valid · ⚠ Missing · ✗ Wrong unit</span>
+      </div>
+      <div class="card" style="border-top:4px solid var(--g);">
+        <div style="font-size:32px;margin-bottom:12px;">💡</div>
+        <h4 style="margin-bottom:7px;">Insights Panel</h4>
+        <p style="font-size:13px;">5 dynamic business-readable insights from live calculations — tells you why emissions are high and what to do.</p>
+        <div class="hr"></div>
+        <span class="tag tg">Largest source · MoM · Tips</span>
+      </div>
+      <div class="card" style="border-top:4px solid var(--blue);">
+        <div style="font-size:32px;margin-bottom:12px;">📈</div>
+        <h4 style="margin-bottom:7px;">Enhanced Trend Chart</h4>
+        <p style="font-size:13px;">6-month area chart with target reference line, min/max annotations, and monthly/quarterly toggle.</p>
+        <div class="hr"></div>
+        <span class="tag tb">Recharts · ReferenceLine</span>
+      </div>
+      <div class="card" style="border-top:4px solid var(--red);">
+        <div style="font-size:32px;margin-bottom:12px;">🔬</div>
+        <h4 style="margin-bottom:7px;">Audit Trail</h4>
+        <p style="font-size:13px;">10-column table with factor source, effective date, methodology, and ✓ Verified status per row.</p>
+        <div class="hr"></div>
+        <span class="tag tr">EPA eGRID · GHG Protocol · IPCC</span>
+      </div>
+      <div class="card" style="border-top:4px solid var(--g);">
+        <div style="font-size:32px;margin-bottom:12px;">🎛️</div>
+        <h4 style="margin-bottom:7px;">Scenario Planner</h4>
+        <p style="font-size:13px;">3 sliders model electricity reduction, gas cut, and renewable switch with a live result panel showing savings.</p>
+        <div class="hr"></div>
+        <span class="tag tg">Reduction tCO₂e · Cost savings</span>
+      </div>
+      <div class="card" style="border-top:4px solid var(--amb);">
+        <div style="font-size:32px;margin-bottom:12px;">🌿</div>
+        <h4 style="margin-bottom:7px;">Offset Estimator</h4>
+        <p style="font-size:13px;">25–100% coverage selector, VCM vs ETS market toggle, visual coverage bar, and updated credit costs.</p>
+        <div class="hr"></div>
+        <span class="tag ta">VCM $10–15 · ETS $45–65/credit</span>
+      </div>
+      <div class="card" style="border-top:4px solid var(--g);">
+        <div style="font-size:32px;margin-bottom:12px;">📄</div>
+        <h4 style="margin-bottom:7px;">Export Suite</h4>
+        <p style="font-size:13px;">PDF report, raw CSV, GHG Protocol template, and clipboard copy — all with loading and confirmation states.</p>
+        <div class="hr"></div>
+        <span class="tag tg">jsPDF · Blob API · Clipboard</span>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>All 8 features implemented and live</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 6 · SYSTEM WORKFLOW
+════════════════════════════════════════════ -->
+<div class="slide" data-s="6" style="background:var(--bg);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">06 / 10</div></div>
+  <div class="body">
+    <div class="lbl">System Design</div>
+    <h2 style="margin-bottom:8px;">End-to-End <span class="g">Workflow</span></h2>
+    <p style="font-size:16px;max-width:680px;margin-bottom:24px;">Each step is seamless — from a single user action to a fully rendered, insight-rich dashboard. No server, no database, no page reload.</p>
+
+    <div class="g2" style="flex:1;gap:20px;">
+      <div class="card" style="display:flex;flex-direction:column;gap:0;">
+        <div class="tli">
+          <div class="tls"><div class="tld"></div><div class="tll"></div></div>
+          <div class="tlb">
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;"><span class="tag tg">01</span><h4>Input Data</h4></div>
+            <p style="font-size:14px;">Type kWh, therms, gallons — or drag a CSV file. <strong style="color:var(--ink);">CarbonPulse</strong> validates every row for completeness and correct units before any math runs.</p>
+          </div>
+        </div>
+        <div class="tli">
+          <div class="tls"><div class="tld"></div><div class="tll"></div></div>
+          <div class="tlb">
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;"><span class="tag tg">02</span><h4>Apply Filters &amp; Multipliers</h4></div>
+            <p style="font-size:14px;">Switching facility (Plant A/B/C) or scenario (Optimized = ×0.85, High Production = ×1.2) multiplies all base inputs and recalculates instantly via React state.</p>
+          </div>
+        </div>
+        <div class="tli">
+          <div class="tls"><div class="tld"></div></div>
+          <div class="tlb" style="padding-bottom:0;">
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;"><span class="tag tg">03</span><h4>Calculate CO₂e</h4></div>
+            <p style="font-size:14px;">Each adjusted input × its EPA emission factor → kg CO₂e. Results split into Scope 1 (combustion) and Scope 2 (electricity). All math runs in the browser.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="display:flex;flex-direction:column;gap:0;">
+        <div class="tli">
+          <div class="tls"><div class="tld" style="background:var(--amb);"></div><div class="tll" style="background:var(--ambl);"></div></div>
+          <div class="tlb">
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;"><span class="tag ta">04</span><h4>Visualize &amp; Analyze</h4></div>
+            <p style="font-size:14px;">Recharts renders the 6-month area trend, donut scope split, and horizontal bar source breakdown. The insights engine generates 5 plain-English recommendations from live values.</p>
+          </div>
+        </div>
+        <div class="tli">
+          <div class="tls"><div class="tld" style="background:var(--amb);"></div><div class="tll" style="background:var(--ambl);"></div></div>
+          <div class="tlb">
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;"><span class="tag ta">05</span><h4>Plan &amp; Simulate</h4></div>
+            <p style="font-size:14px;">The Scenario Planner lets users drag sliders to model future changes — electricity reduction, gas cut, renewable switch — before committing any resources.</p>
+          </div>
+        </div>
+        <div class="tli">
+          <div class="tls"><div class="tld" style="background:var(--amb);"></div></div>
+          <div class="tlb" style="padding-bottom:0;">
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;"><span class="tag ta">06</span><h4>Export &amp; Report</h4></div>
+            <p style="font-size:14px;">jsPDF generates a formatted multi-table report. GHG Protocol CSV is pre-filled for regulatory submission. A clipboard copy pastes a plain-text summary anywhere. All in under 1 second.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>Fully client-side · No backend required</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 7 · TECHNICAL ARCHITECTURE
+════════════════════════════════════════════ -->
+<div class="slide" data-s="7" style="background:var(--wh);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">07 / 10</div></div>
+  <div class="body">
+    <div class="lbl">Technical Architecture</div>
+    <h2 style="margin-bottom:8px;">How <span class="g">CarbonPulse</span> Is Built</h2>
+    <p style="font-size:16px;max-width:680px;margin-bottom:24px;">A modular React app — data, calculations, components, and exports each in their own files. Clean separation, zero build errors.</p>
+
+    <div class="g2" style="flex:1;gap:18px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <!-- TECH STACK DIAGRAM -->
+        <div class="card">
+          <h3 style="font-size:16px;margin-bottom:16px;">Tech Stack</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:9px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">⚛️</div>
+              <div style="flex:1;"><div style="font-weight:700;font-size:14px;">React 19 + Vite 8</div><div style="font-size:12px;color:var(--dim);">UI framework + instant dev server</div></div>
+              <span class="tag tg" style="font-size:10px;">Frontend</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:9px;background:var(--ambl);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">📊</div>
+              <div style="flex:1;"><div style="font-weight:700;font-size:14px;">Recharts</div><div style="font-size:12px;color:var(--dim);">Area chart, bar chart, donut chart</div></div>
+              <span class="tag ta" style="font-size:10px;">Charts</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:9px;background:var(--redl);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">📄</div>
+              <div style="flex:1;"><div style="font-weight:700;font-size:14px;">jsPDF + jspdf-autotable</div><div style="font-size:12px;color:var(--dim);">In-browser PDF generation</div></div>
+              <span class="tag tr" style="font-size:10px;">Export</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:9px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">🎨</div>
+              <div style="flex:1;"><div style="font-weight:700;font-size:14px;">Inline Styles + Central PALETTE</div><div style="font-size:12px;color:var(--dim);">No CSS framework — zero class collisions</div></div>
+              <span class="tag tg" style="font-size:10px;">Styling</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KEY DECISIONS -->
+        <div class="card" style="flex:1;">
+          <h3 style="font-size:16px;margin-bottom:14px;">3 Key Design Decisions</h3>
+          <div style="display:flex;gap:12px;padding-bottom:12px;border-bottom:1.5px solid var(--line);">
+            <div style="width:34px;height:34px;border-radius:9px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gd);flex-shrink:0;font-size:16px;">1</div>
+            <div><h4 style="margin-bottom:3px;font-size:14px;">Single useState → all calculations</h4><p style="font-size:13px;">No useEffect for math. All 20+ values recompute fresh on every render — no stale state bugs possible.</p></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1.5px solid var(--line);">
+            <div style="width:34px;height:34px;border-radius:9px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gd);flex-shrink:0;font-size:16px;">2</div>
+            <div><h4 style="margin-bottom:3px;font-size:14px;">Zero backend — 100% browser</h4><p style="font-size:13px;">Validation, charts, PDF export, and CSV parsing all run client-side. Deploy as a static file anywhere.</p></div>
+          </div>
+          <div style="display:flex;gap:12px;padding-top:12px;">
+            <div style="width:34px;height:34px;border-radius:9px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gd);flex-shrink:0;font-size:16px;">3</div>
+            <div><h4 style="margin-bottom:3px;font-size:14px;">Modular file structure</h4><p style="font-size:13px;">8 components + 2 utility files. Each concern is isolated — swap a calculation or chart without touching the UI.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <!-- FILE TREE -->
+        <div class="card" style="flex:1;">
+          <h3 style="font-size:16px;margin-bottom:14px;">Project Structure</h3>
+          <div style="font-size:13px;line-height:2.2;font-family:monospace;color:var(--gray);background:var(--bg);border-radius:10px;padding:14px 16px;">
+            <div style="color:var(--g);font-weight:800;font-size:14px;">carbonpulse/src/</div>
+            <div style="padding-left:18px;">├── <span style="color:var(--ink);font-weight:600;">App.jsx</span> <span style="color:var(--dim);font-size:11px;">— state · routing · exports</span></div>
+            <div style="padding-left:18px;">├── <span style="color:var(--ink);font-weight:600;">data/mockData.js</span> <span style="color:var(--dim);font-size:11px;">— PALETTE, factors, mocks</span></div>
+            <div style="padding-left:18px;">├── <span style="color:var(--ink);font-weight:600;">utils/calculations.js</span> <span style="color:var(--dim);font-size:11px;">— pure functions</span></div>
+            <div style="padding-left:18px;">├── <span style="color:var(--ink);font-weight:600;">utils/exports.js</span> <span style="color:var(--dim);font-size:11px;">— PDF · CSV · clipboard</span></div>
+            <div style="padding-left:18px;">└── <span style="color:var(--g);font-weight:700;">components/</span></div>
+            <div style="padding-left:38px;color:var(--dim);font-size:12px;">FilterBar · InsightsPanel</div>
+            <div style="padding-left:38px;color:var(--dim);font-size:12px;">OverviewTab · InputsTab</div>
+            <div style="padding-left:38px;color:var(--dim);font-size:12px;">AuditTrail · CSVUpload</div>
+            <div style="padding-left:38px;color:var(--dim);font-size:12px;">OffsetsTab · ScenarioTool</div>
+          </div>
+        </div>
+
+        <!-- BUILD STATS -->
+        <div class="card-ink" style="display:flex;gap:0;justify-content:space-around;text-align:center;">
+          <div class="stat"><div class="n">18</div><div class="u">Project files</div></div>
+          <div style="width:1px;background:rgba(255,255,255,.08);margin:0 4px;"></div>
+          <div class="stat"><div class="n">11</div><div class="u">Components</div></div>
+          <div style="width:1px;background:rgba(255,255,255,.08);margin:0 4px;"></div>
+          <div class="stat"><div class="n">2,400</div><div class="u">Lines added</div></div>
+          <div style="width:1px;background:rgba(255,255,255,.08);margin:0 4px;"></div>
+          <div class="stat"><div class="n">0</div><div class="u">Build errors</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>npm install &amp;&amp; npm run dev</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 8 · LIVE DEMO
+════════════════════════════════════════════ -->
+<div class="slide" data-s="8" style="background:var(--bg);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">08 / 10</div></div>
+  <div class="body">
+    <div class="lbl">Live Demo</div>
+    <h2 style="margin-bottom:8px;"><span class="g">CarbonPulse</span> in Action</h2>
+    <p style="font-size:16px;max-width:680px;margin-bottom:20px;">A 3-minute walkthrough covering the full workflow — from entering data to exporting an audit-ready report.</p>
+
+    <!-- KPI ROW -->
+    <div style="display:flex;gap:14px;margin-bottom:18px;">
+      <div class="card" style="flex:1;border-left:5px solid var(--g);">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:6px;">Total Emissions · Mar 2026</div>
+        <div style="font-family:var(--head);font-size:42px;font-weight:900;color:var(--g);line-height:1;">59.34</div>
+        <div style="font-size:13px;color:var(--dim);margin-top:4px;">tCO₂e · Midwest Auto Components</div>
+      </div>
+      <div class="card" style="flex:1;border-left:5px solid var(--amb);">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:6px;">Scope 1 · Direct Combustion</div>
+        <div style="font-family:var(--head);font-size:42px;font-weight:900;color:var(--amb);line-height:1;">11.07</div>
+        <div style="font-size:13px;color:var(--dim);margin-top:4px;">tCO₂e · Gas + diesel</div>
+      </div>
+      <div class="card" style="flex:1;border-left:5px solid var(--g);">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:6px;">Scope 2 · Purchased Electricity</div>
+        <div style="font-family:var(--head);font-size:42px;font-weight:900;color:var(--g);line-height:1;">48.27</div>
+        <div style="font-size:13px;color:var(--dim);margin-top:4px;">tCO₂e · Grid electricity</div>
+      </div>
+      <div class="card" style="flex:1;border-left:5px solid var(--red);">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:6px;">Month-over-Month</div>
+        <div style="font-family:var(--head);font-size:42px;font-weight:900;color:var(--red);line-height:1;">+7.1%</div>
+        <div style="font-size:13px;color:var(--dim);margin-top:4px;">vs February (55.1 tCO₂e)</div>
+      </div>
+    </div>
+
+    <div class="g2" style="flex:1;gap:18px;">
+      <div class="card">
+        <h4 style="margin-bottom:16px;color:var(--g);">5-Step Demo Script</h4>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:14px;">
+          <div style="display:flex;gap:12px;"><span class="tag tg" style="flex-shrink:0;align-self:flex-start;">01</span><span><strong>Overview Tab</strong> — Switch Scenario to "High Production" → all emissions jump ×1.2 simultaneously across every chart and KPI</span></div>
+          <div style="display:flex;gap:12px;"><span class="tag tg" style="flex-shrink:0;align-self:flex-start;">02</span><span><strong>Facility Filter</strong> — Switch to "Plant B – Chicago" → different baseline multiplier (×1.15), same live engine</span></div>
+          <div style="display:flex;gap:12px;"><span class="tag ta" style="flex-shrink:0;align-self:flex-start;">03</span><span><strong>Inputs Tab</strong> — Change electricity 120,000 → 90,000 kWh → every chart, KPI, and insight updates with no reload</span></div>
+          <div style="display:flex;gap:12px;"><span class="tag ta" style="flex-shrink:0;align-self:flex-start;">04</span><span><strong>Scenario Planner</strong> — "Reduce Electricity" slider to 20% → shows 9.6 tCO₂e saved, $96–$144 fewer credits needed</span></div>
+          <div style="display:flex;gap:12px;"><span class="tag tg" style="flex-shrink:0;align-self:flex-start;">05</span><span><strong>Export PDF</strong> → formatted, branded report downloads in under 1 second with all calculations included</span></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card-g">
+          <h4 style="margin-bottom:12px;color:var(--gd);">Sample Insights Panel Output</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;"><div style="width:9px;height:9px;border-radius:50%;background:var(--g);margin-top:5px;flex-shrink:0;"></div><span><strong>Electricity is 81.3%</strong> of total emissions — the dominant source this period.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><div style="width:9px;height:9px;border-radius:50%;background:var(--red);margin-top:5px;flex-shrink:0;"></div><span>Emissions <strong style="color:var(--red);">increased 7.1%</strong> vs February. Review electricity procurement contracts.</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><div style="width:9px;height:9px;border-radius:50%;background:var(--g);margin-top:5px;flex-shrink:0;"></div><span>Reducing electricity by 15% would save <strong>7.2 tCO₂e</strong> and ~$72–$108 in offset costs.</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:10px;">Carbon Intensity vs Industry Benchmark</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-size:14px;font-weight:600;">0.0005 <span style="font-weight:400;color:var(--dim);">tCO₂e/kWh</span></span>
+            <span class="tag tr">12% above benchmark</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px;">
+            <div style="flex:1;height:10px;border-radius:5px;background:var(--g);"></div>
+            <div style="width:12%;height:10px;border-radius:5px;background:var(--red);"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dim);">
+            <span>Benchmark: 0.00045 (DEFRA SME Automotive 2024)</span>
+            <span style="color:var(--red);">▲ Current</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>localhost:5173 · github.com/Omjagtapp/Carbonpulse</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 9 · MIDTERM → FINAL
+════════════════════════════════════════════ -->
+<div class="slide" data-s="9" style="background:var(--wh);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">09 / 10</div></div>
+  <div class="body">
+    <div class="lbl">Project Progress</div>
+    <h2 style="margin-bottom:8px;">Midterm <span class="g">→ Final</span></h2>
+    <p style="font-size:16px;max-width:680px;margin-bottom:24px;"><strong>CarbonPulse</strong> went from a basic single-file prototype to a full modular SaaS MVP with 10 shipped features across 18 files.</p>
+
+    <div class="g2" style="margin-bottom:18px;">
+      <div class="card" style="border:1.5px solid var(--line);opacity:.9;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+          <span class="tag ta">Midterm State</span>
+          <span style="font-size:12px;color:var(--dim);">Single file · basic prototype</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted);">
+          <div class="chk"><span class="cx">—</span><span>Single App.jsx with all logic mixed in</span></div>
+          <div class="chk"><span class="cx">—</span><span>Static KPI cards and basic charts only</span></div>
+          <div class="chk"><span class="cx">—</span><span>Manual input only — no CSV upload</span></div>
+          <div class="chk"><span class="cx">—</span><span>No filtering or scenario switching</span></div>
+          <div class="chk"><span class="cx">—</span><span>Export buttons with no feedback states</span></div>
+          <div class="chk"><span class="cx">—</span><span>No insights or recommended actions</span></div>
+          <div class="chk"><span class="cx">—</span><span>Simple 4-column audit table</span></div>
+          <div class="chk"><span class="cx">—</span><span>No scenario planning tool</span></div>
+        </div>
+      </div>
+      <div class="card-g" style="border:1.5px solid var(--gm);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+          <span class="tag tg">Final Submission</span>
+          <span style="font-size:12px;color:var(--gd);">18 files · full SaaS MVP</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+          <div class="chk"><span class="ci">✓</span><span>Modular architecture — 8 components + 2 utils</span></div>
+          <div class="chk"><span class="ci">✓</span><span>Animated KPIs, trend chart with target line</span></div>
+          <div class="chk"><span class="ci">✓</span><span>CSV upload with validation + auto-populate</span></div>
+          <div class="chk"><span class="ci">✓</span><span>4 filters: month, year, facility, scenario</span></div>
+          <div class="chk"><span class="ci">✓</span><span>Export with loading states + confirmation</span></div>
+          <div class="chk"><span class="ci">✓</span><span>5 dynamic insights generated from live data</span></div>
+          <div class="chk"><span class="ci">✓</span><span>10-column audit trail with verified status</span></div>
+          <div class="chk"><span class="ci">✓</span><span>Scenario Planner — 3 sliders + live result panel</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-ink" style="display:flex;justify-content:space-around;text-align:center;gap:0;">
+      <div class="stat"><div class="n">+11</div><div class="u">New components</div></div>
+      <div style="width:1px;background:rgba(255,255,255,.08);"></div>
+      <div class="stat"><div class="n">+2,400</div><div class="u">Lines added</div></div>
+      <div style="width:1px;background:rgba(255,255,255,.08);"></div>
+      <div class="stat"><div class="n">10</div><div class="u">Features shipped</div></div>
+      <div style="width:1px;background:rgba(255,255,255,.08);"></div>
+      <div class="stat"><div class="n">3</div><div class="u">Export formats</div></div>
+      <div style="width:1px;background:rgba(255,255,255,.08);"></div>
+      <div class="stat"><div class="n">0</div><div class="u">Build errors</div></div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>Committed to github.com/Omjagtapp/Carbonpulse</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 10 · AI TOOLS
+════════════════════════════════════════════ -->
+<div class="slide" data-s="10" style="background:var(--wh);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">10 / 11</div></div>
+  <div class="body">
+    <div class="lbl">Entrepreneurship &amp; AI</div>
+    <h2 style="margin-bottom:8px;">How We Used <span class="g">AI to Build This</span></h2>
+    <p style="font-size:16px;max-width:700px;margin-bottom:24px;">Three AI tools turned a 4-person student team into a fully capable product team — handling research, engineering, and design in weeks instead of months.</p>
+
+    <div class="g3" style="margin-bottom:18px;">
+
+      <!-- CHATGPT -->
+      <div class="card" style="border-top:4px solid #10a37f;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <div style="width:48px;height:48px;border-radius:14px;background:#d1fae5;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11" stroke="#10a37f" stroke-width="2"/><path d="M8 13c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5" stroke="#10a37f" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="13" r="2" fill="#10a37f"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:800;font-size:16px;color:#10a37f;">ChatGPT</div>
+            <div style="font-size:11px;color:var(--dim);font-weight:600;">Research &amp; Strategy</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;">
+          <div class="chk"><span class="ci" style="color:#10a37f;">✓</span><span>Researched <strong>GHG Protocol</strong> and Scope 1 vs 2 definitions — understood in minutes, not days</span></div>
+          <div class="chk"><span class="ci" style="color:#10a37f;">✓</span><span>Market research on <strong>SME carbon reporting</strong> tools, pricing, and competitor gaps</span></div>
+          <div class="chk"><span class="ci" style="color:#10a37f;">✓</span><span>Validated our <strong>problem statement</strong> — confirmed 78% of SMEs have no emissions baseline</span></div>
+          <div class="chk"><span class="ci" style="color:#10a37f;">✓</span><span>Explained EPA eGRID emission factors and helped us pick the right <strong>methodology</strong></span></div>
+        </div>
+        <div class="hr"></div>
+        <div style="font-size:11px;color:var(--dim);font-weight:600;">Used for: ideation · research · content · market validation</div>
+      </div>
+
+      <!-- CLAUDE -->
+      <div class="card" style="border-top:4px solid var(--g);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <div style="width:48px;height:48px;border-radius:14px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="4" width="18" height="18" rx="4" stroke="#16a34a" stroke-width="2"/><path d="M9 13h8M9 9h5M9 17h6" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:800;font-size:16px;color:var(--g);">Claude (Anthropic)</div>
+            <div style="font-size:11px;color:var(--dim);font-weight:600;">Engineering &amp; Building</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;">
+          <div class="chk"><span class="ci">✓</span><span>Built the <strong>entire React dashboard</strong> — 18 files, 8 components, 2,400+ lines of code</span></div>
+          <div class="chk"><span class="ci">✓</span><span>Implemented <strong>PDF + CSV export</strong>, CSV upload with validation, and live filter system</span></div>
+          <div class="chk"><span class="ci">✓</span><span>Debugged errors in real time — <strong>zero build errors</strong> in the final submission</span></div>
+          <div class="chk"><span class="ci">✓</span><span>Built this <strong>presentation</strong> as a polished interactive HTML slideshow</span></div>
+        </div>
+        <div class="hr"></div>
+        <div style="font-size:11px;color:var(--dim);font-weight:600;">Used for: all code · debugging · architecture · UI design</div>
+      </div>
+
+      <!-- PERPLEXITY -->
+      <div class="card" style="border-top:4px solid var(--blue);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <div style="width:48px;height:48px;border-radius:14px;background:var(--bluel);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="11" cy="11" r="7" stroke="#2563eb" stroke-width="2"/><path d="M16.5 16.5L22 22" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/><path d="M8 11h6M11 8v6" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:800;font-size:16px;color:var(--blue);">Perplexity AI</div>
+            <div style="font-size:11px;color:var(--dim);font-weight:600;">Live Data &amp; Citations</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;">
+          <div class="chk"><span class="ci" style="color:var(--blue);">✓</span><span>Found <strong>real regulatory data</strong> — SEC, EU CSRD deadlines, SME survey statistics with citations</span></div>
+          <div class="chk"><span class="ci" style="color:var(--blue);">✓</span><span>Looked up <strong>current carbon credit prices</strong> in VCM and ETS markets ($10–65 range)</span></div>
+          <div class="chk"><span class="ci" style="color:var(--blue);">✓</span><span>Verified <strong>competitor pricing</strong> — confirmed SimaPro costs $12,000+/year for enterprises</span></div>
+          <div class="chk"><span class="ci" style="color:var(--blue);">✓</span><span>Found <strong>industry benchmarks</strong> for SME automotive carbon intensity (DEFRA 2024)</span></div>
+        </div>
+        <div class="hr"></div>
+        <div style="font-size:11px;color:var(--dim);font-weight:600;">Used for: sourced facts · pricing · regulatory deadlines</div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM TAKEAWAY -->
+    <div class="card-ink" style="display:flex;align-items:center;gap:32px;">
+      <div style="flex:1;">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.35);margin-bottom:8px;">The Entrepreneurship Lesson</div>
+        <div style="font-family:var(--head);font-size:20px;font-weight:800;line-height:1.35;color:#fff;">
+          AI didn't replace our team — it <span style="color:var(--g);">multiplied</span> it.<br/>
+          <span style="font-size:15px;font-weight:500;color:rgba(255,255,255,.6);">4 students shipped a product that would take a 3-person dev team 3 months to build.</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:28px;flex-shrink:0;text-align:center;">
+        <div class="stat"><div class="n">3</div><div class="u">AI tools used</div></div>
+        <div style="width:1px;background:rgba(255,255,255,.08);"></div>
+        <div class="stat"><div class="n">~$0</div><div class="u">Dev cost</div></div>
+        <div style="width:1px;background:rgba(255,255,255,.08);"></div>
+        <div class="stat"><div class="n">weeks</div><div class="u">Not months</div></div>
+      </div>
+    </div>
+
+    <div class="foot"><span>CarbonPulse · Group 4 Final Project</span><span>AI as a force multiplier — not a replacement</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 11 · CONCLUSION
+════════════════════════════════════════════ -->
+<div class="slide" data-s="11" style="background:var(--bg);">
+  <div class="bar"><div class="logo"><div class="logo-box">C</div><span class="logo-name">CarbonPulse</span></div><div class="snum">11 / 11</div></div>
+  <div class="body">
+    <div class="lbl">Conclusion</div>
+    <h2 style="margin-bottom:8px;">What <span class="g">CarbonPulse</span> Delivers</h2>
+    <p style="font-size:16px;max-width:680px;margin-bottom:24px;">A fully working SaaS MVP that answers not just "what are my emissions?" — but why they're high and exactly what to do about it.</p>
+
+    <div class="g3" style="margin-bottom:18px;">
+      <div class="card" style="text-align:center;border-top:4px solid var(--g);">
+        <div style="font-size:40px;margin-bottom:12px;">📊</div>
+        <div style="font-weight:800;font-size:16px;color:var(--g);margin-bottom:8px;">"What are my emissions?"</div>
+        <p style="font-size:14px;">Live KPI cards, 6-month trend, scope split donut, and source bar chart — all updating in real time as you type.</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:4px solid var(--amb);">
+        <div style="font-size:40px;margin-bottom:12px;">💡</div>
+        <div style="font-weight:800;font-size:16px;color:var(--amb);margin-bottom:8px;">"Why are they high?"</div>
+        <p style="font-size:14px;">The Insights panel generates 5 plain-English explanations from live calculations — largest source, MoM trend, reduction opportunities.</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:4px solid var(--blue);">
+        <div style="font-size:40px;margin-bottom:12px;">🎯</div>
+        <div style="font-weight:800;font-size:16px;color:var(--blue);margin-bottom:8px;">"What can I do?"</div>
+        <p style="font-size:14px;">The Scenario Planner models any change before you commit. The Offset Estimator shows exactly what it costs to compensate.</p>
+      </div>
+    </div>
+
+    <div class="g2" style="flex:1;gap:18px;">
+      <div class="card">
+        <h3 style="font-size:16px;margin-bottom:14px;color:var(--g);">What's Next for CarbonPulse</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;">
+          <div style="display:flex;gap:12px;"><span class="g" style="font-weight:800;flex-shrink:0;">→</span><span><strong>User auth</strong> — multiple companies, each seeing only their own data</span></div>
+          <div style="display:flex;gap:12px;"><span class="g" style="font-weight:800;flex-shrink:0;">→</span><span><strong>Persistent storage</strong> — historical data saved, year-over-year comparisons</span></div>
+          <div style="display:flex;gap:12px;"><span class="g" style="font-weight:800;flex-shrink:0;">→</span><span><strong>Scope 3 emissions</strong> — supply chain, travel, employee commuting</span></div>
+          <div style="display:flex;gap:12px;"><span class="g" style="font-weight:800;flex-shrink:0;">→</span><span><strong>Live carbon price feed</strong> — real VCM/ETS prices instead of static estimates</span></div>
+          <div style="display:flex;gap:12px;"><span class="g" style="font-weight:800;flex-shrink:0;">→</span><span><strong>Vercel deployment</strong> — public URL, no local setup required</span></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="background:var(--g);border-radius:18px;padding:28px 32px;flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-family:var(--head);font-size:24px;font-weight:900;color:#fff;line-height:1.25;margin-bottom:10px;">
+            CarbonPulse is a step toward<br/>a more sustainable future —
+          </div>
+          <div style="font-size:16px;color:rgba(255,255,255,.7);">one data point at a time.</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:8px;">Try it yourself</div>
+          <div style="font-weight:700;font-size:15px;color:var(--g);margin-bottom:4px;">github.com/Omjagtapp/Carbonpulse</div>
+          <div style="font-size:13px;color:var(--dim);">npm install &amp;&amp; npm run dev</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>CarbonPulse · Group 4 · Anish · Khuzaima · Om · Ujjval</span>
+      <span style="font-weight:700;color:var(--g);font-size:13px;">Thank you</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- EXPORT TOOLBAR -->
+<div class="toolbar">
+  <button class="tbtn" id="dlBtn" onclick="handleDownload()">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 7l3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 11h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    Download HTML
+  </button>
+  <button class="tbtn" id="pdfBtn" onclick="handlePDF()">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 5h6M4 7.5h6M4 10h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Save as PDF
+  </button>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="arr" onclick="go(cur-1)">←</button>
+  <button onclick="go(1)">Title</button>
+  <button onclick="go(2)">Overview</button>
+  <button onclick="go(3)">Problem</button>
+  <button onclick="go(4)">Solution</button>
+  <button onclick="go(5)">Features</button>
+  <button onclick="go(6)">Workflow</button>
+  <button onclick="go(7)">Tech</button>
+  <button onclick="go(8)">Demo</button>
+  <button onclick="go(9)">Progress</button>
+  <button onclick="go(10)">AI Tools</button>
+  <button onclick="go(11)">Conclusion</button>
+  <span class="ctr" id="ctr">1 / 11</span>
+  <button class="arr" onclick="go(cur+1)">→</button>
+</div>
+
+<!-- DOTS -->
+<div class="dots" id="dots"></div>
+
+<script>
+const N=11; let cur=1;
+const dotsEl=document.getElementById('dots');
+for(let i=1;i<=N;i++){const d=document.createElement('div');d.className='dot'+(i===1?' on':'');d.onclick=()=>go(i);dotsEl.appendChild(d)}
+function go(n){
+  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.dot').forEach(d=>d.classList.remove('on'));
+  cur=Math.max(1,Math.min(N,n));
+  document.querySelector('[data-s="'+cur+'"]').classList.add('on');
+  document.querySelectorAll('.dot')[cur-1].classList.add('on');
+  document.getElementById('ctr').textContent=cur+' / '+N;
+}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+});
+
+function handleDownload(){
+  const btn=document.getElementById('dlBtn');
+  const orig=btn.innerHTML;
+  btn.innerHTML='✓ Downloaded!';
+  btn.style.color='var(--g)';
+  btn.style.borderColor='var(--g)';
+  downloadHTML();
+  setTimeout(()=>{btn.innerHTML=orig;btn.style.color='';btn.style.borderColor=''},3000);
+}
+function handlePDF(){
+  const btn=document.getElementById('pdfBtn');
+  const orig=btn.innerHTML;
+  btn.innerHTML='Opening print…';
+  setTimeout(()=>{savePDF();btn.innerHTML=orig},200);
+}
+function downloadHTML(){
+  const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.style.display='none';
+  a.href=url;
+  a.download='CarbonPulse-Presentation.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+
+function savePDF(){
+  window.print();
+}
+</script>
+</body>
+</html>

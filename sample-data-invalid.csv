@@ -1,0 +1,5 @@
+source,usage,unit
+electricity,,kWh
+solar,500,kWh
+natural_gas,1200,liters
+diesel,-50,gallons

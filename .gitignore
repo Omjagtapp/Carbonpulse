@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Academic / report artifacts
+Final_Report_CarbonPulse.docx
+Final_Report_CarbonPulse.html
+build_report.py
+screenshot.mjs
+/screenshots/
